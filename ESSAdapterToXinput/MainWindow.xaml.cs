@@ -48,6 +48,7 @@ namespace ESSAdapterToXinput
             {
                 controllerReader.Finish();
                 Connected = false;
+                controller.Disconnect();
             }
         }
 
@@ -57,7 +58,7 @@ namespace ESSAdapterToXinput
         }
 
         private void ControllerReader_ControllerStateChanged(IControllerReader sender, ControllerState state)
-        {          
+        {
             switch(DeviceIndex)
             {
                 // NES
@@ -128,7 +129,7 @@ namespace ESSAdapterToXinput
                     // Trigger
                     controller.SetSliderValue(Xbox360Slider.LeftTrigger, (byte)(Convert.ToInt32(state.Buttons["z"]) * 255));
                     controller.SetSliderValue(Xbox360Slider.RightTrigger, (byte)(Convert.ToInt32(state.Buttons["r"]) * 255));
-                    controller.SetButtonState(Xbox360Button.LeftShoulder, state.Buttons["l"]);                    
+                    controller.SetButtonState(Xbox360Button.LeftShoulder, state.Buttons["l"]);
 
                     // Start
                     controller.SetButtonState(Xbox360Button.Start, state.Buttons["start"]);
@@ -157,14 +158,24 @@ namespace ESSAdapterToXinput
                     controller.SetButtonState(Xbox360Button.Right, state.Buttons["right"]);
 
                     // Trigger
-                    controller.SetSliderValue(Xbox360Slider.LeftTrigger, (byte)(state.Analogs["trig_l"] * 255));
-                    controller.SetSliderValue(Xbox360Slider.RightTrigger, (byte)(state.Analogs["trig_r"] * 255));
-                    controller.SetButtonState(Xbox360Button.RightShoulder, state.Buttons["z"]);
+                    // this.Dispatcher.Invoke(() => {
+                    //     if (CheckBox_Trigger.IsChecked == true){
+                    //         // convert the input to a button if the analog read is over 0.75
+                    //         controller.SetButtonState(Xbox360Button.LeftShoulder, (state.Analogs["trig_l"] >= 0.75));
+                    //         controller.SetButtonState(Xbox360Button.RightShoulder, (state.Analogs["trig_r"] >= 0.75));
+                    //     } else {
+                    //         controller.SetSliderValue(Xbox360Slider.LeftTrigger, (byte)(Convert.ToInt32(state.Analogs["trig_l"]) * 255));
+                    //         controller.SetSliderValue(Xbox360Slider.RightTrigger, (byte)(Convert.ToInt32(state.Analogs["trig_r"]) * 255));
+                    //     }
+                    // });
+                    controller.SetButtonState(Xbox360Button.LeftShoulder, (state.Analogs["trig_l"] >= 0.75));
+                    controller.SetButtonState(Xbox360Button.RightShoulder, (state.Analogs["trig_r"] >= 0.75));
+                    controller.SetButtonState(Xbox360Button.Back, state.Buttons["z"]);
 
                     // Start
                     controller.SetButtonState(Xbox360Button.Start, state.Buttons["start"]);
                     break;
-            }   
+            }
         }
 
         private void ControllerReader_ControllerDisconnected(object sender, EventArgs e)
@@ -185,7 +196,7 @@ namespace ESSAdapterToXinput
             controllerReader.ControllerDisconnected += ControllerReader_ControllerDisconnected;
 
             Connected = true;
-        }  
+        }
 
         private void Unplug_ButtonClicked(object sender, RoutedEventArgs e)
         {

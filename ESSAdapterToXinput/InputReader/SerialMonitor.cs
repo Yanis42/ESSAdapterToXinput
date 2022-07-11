@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Timers;
 using System.Windows.Threading;
+// using System.Windows;
 
 
 namespace ESSAdapterToXinput.InputReader
@@ -98,6 +99,13 @@ namespace ESSAdapterToXinput.InputReader
 
             // Clear our buffer up until the last split character.
             _localBuffer.RemoveRange(0, lastSplitIndex);
+            // try {
+            //     _localBuffer.RemoveRange(0, lastSplitIndex);
+            // }
+            // catch (ArgumentException) {
+            //     // why???
+            //     MessageBox.Show("ArgumentException");
+            // }
         }
     }
 }

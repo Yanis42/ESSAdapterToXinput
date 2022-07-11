@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ESSAdapterToXinput"
         mc:Ignorable="d"
-        Closing="MainWindow_Closing"  
-        Title="ESSAdapterToXinput" Height="130" Width="300">
+        Closing="MainWindow_Closing"
+        Title="ESSAdapterToXinput" Height="130" Width="300" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <StackPanel>
         <ComboBox Name="ComboBox_Device">
             <ComboBoxItem>NES</ComboBoxItem>
             <ComboBoxItem>SNES</ComboBoxItem>
             <ComboBoxItem>N64</ComboBoxItem>
-            <ComboBoxItem>GAMECUBE</ComboBoxItem>
+            <ComboBoxItem>Gamecube</ComboBoxItem>
         </ComboBox>
         <ComboBox Name="ComboBox_Com">
             <ComboBoxItem>COM1</ComboBoxItem>
@@ -25,5 +25,8 @@
         </ComboBox>
         <Button Name="Button_Plug" Click="Plug_ButtonClicked" IsEnabled="True">Plug</Button>
         <Button Name="Button_Unplug" Click="Unplug_ButtonClicked" IsEnabled="False">Unplug</Button>
+        <!-- <GroupBox Name="GroupBox_GCN" Header="Gamecube Controller Settings" Height="38">
+            <CheckBox Name="CheckBox_Trigger" IsChecked="True" Content="Disable Analog Triggers" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="146"/>
+        </GroupBox> -->
     </StackPanel>
 </Window>
